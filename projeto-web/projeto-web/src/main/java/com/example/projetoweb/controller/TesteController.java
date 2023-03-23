@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/teste")
 public class TesteController {
     //GET - Listagem/Item
-    @GetMapping   //ou @RequestMapping(method=RequestMethod.GET)
+    // /teste/ tudo depois do teste será usado no id
+    @GetMapping("/{id}")   //ou @RequestMapping(method=RequestMethod.GET)
     public String testeGet(
-            @RequestParam("nome") String nomee,
-            @RequestParam("idade") String idade
+            @RequestParam(name="nome", defaultValue = "") String nomee,
+            @RequestParam(name="idade", defaultValue = "0") String idade,
+            @PathVariable("id") String id
     ){
         try {
-            return "Olá mundo do " + nomee + " com " + Integer.parseInt(idade) + " anos completos";
+            return "ID: "+id+"Olá mundo do " + nomee + " com " + Integer.parseInt(idade) + " anos completos";
         } catch(Exception ex){
             return "Dados Inválidos";
         }
