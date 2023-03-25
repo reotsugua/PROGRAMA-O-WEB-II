@@ -24,4 +24,21 @@ public class CategoriaController {
         contador++;
         return categoria;
     }
+
+    @PutMapping("/{id}")
+    public Categoria editar(
+            @RequestBody Categoria categoria,
+            @PathVariable("id") Integer id){
+        categoria.setId(id);
+        
+        Integer indice = null;
+        for (Integer i = 0; i < lista.size(); i++) {
+            if(lista.get(i).getId().equals(id)){
+                indice = i;
+                break;
+            }
+        }
+        lista.set(indice, categoria);
+        return categoria;
+    }
 }
