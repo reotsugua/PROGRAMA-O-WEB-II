@@ -11,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
-
     private List<Categoria> lista = new ArrayList<>();
     private Integer contador = 1;
+
     @Autowired
     private CategoriaService categoriaService;
     @GetMapping
@@ -24,46 +24,25 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public Categoria pegarUm(
             @PathVariable("id") Integer id){
-        categoriaService.pegarCategoriaById(id);
-        return lista.get(id);
+        return categoriaService.pegarCategoriaById(id);
     }
 
     @PostMapping
     public Categoria criar(@RequestBody Categoria categoria){
-        categoria.setId(contador);
-        lista.add(categoria);
-        contador++;
-        return categoria;
+        return categoriaService.criar(categoria);
     }
 
     @PutMapping("/{id}")
-    public Categoria editar(
+    public Categoria deletar(
             @RequestBody Categoria categoria,
             @PathVariable("id") Integer id){
-        categoria.setId(id);
-        
-        Integer indice = null;
-        for (Integer i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getId().equals(id)){
-                indice = i;
-                break;
-            }
-        }
-        lista.set(indice, categoria);
-        return categoria;
+        return categoriaService.editar(categoria,id);
     }
 
     @DeleteMapping("/{id}")
-    public String editar(
+    public String deletar(
             @PathVariable("id") Integer id) {
-        int indice = -1;
-        for (Integer i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getId().equals(id)){
-                indice = i;
-                break;
-            }
-        }
-        lista.remove(indice);
+        categoriaService.deletar(id);
         return "Categoria com o id "+id+" removido com sucesso!";
     }
 }
