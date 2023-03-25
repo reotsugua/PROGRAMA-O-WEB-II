@@ -1,6 +1,8 @@
 package com.example.projetoweb.controller;
 
 import com.example.projetoweb.model.Categoria;
+import com.example.projetoweb.service.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ public class CategoriaController {
 
     private List<Categoria> lista = new ArrayList<>();
     private Integer contador = 1;
+    @Autowired
+    private CategoriaService categoriaService;
     @GetMapping
     public List<Categoria> listar(){
         return lista;
@@ -20,14 +24,8 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public Categoria pegarUm(
             @PathVariable("id") Integer id){
-        Integer indice = null;
-        for (Integer i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getId().equals(id)){
-                indice = i;
-                break;
-            }
-        }
-        return lista.get(indice);
+        categoriaService.pegarCategoriaById(id);
+        return lista.get(id);
     }
 
     @PostMapping
