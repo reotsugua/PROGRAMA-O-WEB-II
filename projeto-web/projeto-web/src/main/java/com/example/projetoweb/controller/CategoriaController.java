@@ -17,6 +17,19 @@ public class CategoriaController {
         return lista;
     }
 
+    @GetMapping("/{id}")
+    public Categoria pegarUm(
+            @PathVariable("id") Integer id){
+        Integer indice = null;
+        for (Integer i = 0; i < lista.size(); i++) {
+            if(lista.get(i).getId().equals(id)){
+                indice = i;
+                break;
+            }
+        }
+        return lista.get(indice);
+    }
+
     @PostMapping
     public Categoria criar(@RequestBody Categoria categoria){
         categoria.setId(contador);
