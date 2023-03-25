@@ -41,4 +41,18 @@ public class CategoriaController {
         lista.set(indice, categoria);
         return categoria;
     }
+
+    @DeleteMapping("/{id}")
+    public String editar(
+            @PathVariable("id") Integer id) {
+        int indice = -1;
+        for (Integer i = 0; i < lista.size(); i++) {
+            if(lista.get(i).getId().equals(id)){
+                indice = i;
+                break;
+            }
+        }
+        lista.remove(indice);
+        return "Categoria com o id "+id+" removido com sucesso!";
+    }
 }
